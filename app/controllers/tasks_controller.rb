@@ -45,8 +45,7 @@ class TasksController < ApplicationController
         @task.destroy
         
         flash[:success] = 'Taskは正常に削除されました'
-        redirect_to task_url
-        
+        redirect_to tasks_url
     end
     
     private
@@ -55,3 +54,7 @@ class TasksController < ApplicationController
         params.require(:task).permit(:content)
     end
 end
+
+# params = { controller: "tasks", id: "2"}
+
+# params[:id]
