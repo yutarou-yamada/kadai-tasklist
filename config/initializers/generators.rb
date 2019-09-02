@@ -1,4 +1,4 @@
-Rils.application.config.generators do |g|
+Rails.application.config.generators do |g|
     g.stylssheet false
     g.javascripts false
     g.helper false
