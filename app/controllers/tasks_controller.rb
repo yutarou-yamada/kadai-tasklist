@@ -1,8 +1,9 @@
 class TasksController < ApplicationController
+    before_action :require_user_logged_in
     before_action :set_task, only: [:show, :edit, :update, :destroy]
-    before_action :require_user_logged_in, only: [:new, :create]
+    
     def index
-        @tasks = Task.all
+        @tasks = current_user.tasks
     end
    
     def show
@@ -14,7 +15,8 @@ class TasksController < ApplicationController
     end
     
     def create
-        @task = Task.new(task_params)
+        @task = current_user.tasks.build(task_params)
+        # current_user.tasks.build(task_params)
         
         if @task.save
             flash[:success] = 'Taskが正常に投稿されました'
@@ -51,7 +53,10 @@ class TasksController < ApplicationController
     
     private
     def set_task
-        @task = Task.find(params[:id])
+        @task = current_user.tasks.find_by(id: params[:id])
+        if !@task
+            redirect_to root_url
+        end
     end
     
     def task_params
